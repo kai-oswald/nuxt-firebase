@@ -1,0 +1,38 @@
+{
+  "name": "@oswld/nuxt-firebase",
+  "version": "0.1.0",
+  "description": "Firebase module for Nuxt",
+  "repository": "kai-oswald/nuxt-firebase",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.0.0-rc.12",
+    "defu": "^6.1.0",
+    "firebase": "^9.12.1",
+    "firebase-admin": "^11.2.0"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "^0.2.0",
+    "@nuxt/schema": "^3.0.0-rc.12",
+    "@nuxtjs/eslint-config-typescript": "^11.0.0",
+    "eslint": "^8.25.0",
+    "nuxt": "^3.0.0-rc.12"
+  }
+}

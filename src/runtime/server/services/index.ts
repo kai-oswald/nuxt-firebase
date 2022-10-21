@@ -1,0 +1,1 @@
+export { serverFirebaseAuth } from './serverFirebaseAuth'
