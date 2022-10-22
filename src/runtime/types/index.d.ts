@@ -12,5 +12,5 @@ export interface CookieOptions {
 
 export interface RedirectOptions {
     login: string
-    callback: string
+    callback?: string
 }
