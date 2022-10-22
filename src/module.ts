@@ -174,12 +174,5 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.hook('prepare:types', (options) => {
       options.references.push({ path: resolve(nuxt.options.buildDir, 'types/firebase.d.ts') })
     })
-
-    // Optimize cross-fetch
-    extendViteConfig((config) => {
-      config.optimizeDeps = config.optimizeDeps || {}
-      config.optimizeDeps.include = config.optimizeDeps.include || []
-      config.optimizeDeps.include.push('cross-fetch')
-    })
   }
 })
