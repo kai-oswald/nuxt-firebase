@@ -1,4 +1,7 @@
 {
   "private": true,
-  "name": "nuxt-firebase-playground"
+  "name": "nuxt-firebase-playground",
+  "dependencies": {
+    "firebase": "^9.12.1"
+  }
 }

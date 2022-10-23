@@ -1,14 +1,11 @@
-import {
-  getAuth,
-  signInWithEmailAndPassword
-} from 'firebase/auth'
+import { type Auth, getAuth } from 'firebase/auth'
 
-export const signIn = async (email: string, password: string) => {
-  const auth = getAuth()
-  return await signInWithEmailAndPassword(auth, email, password)
-}
+export const useFirebaseAuth = (): Auth => {
+  const nuxtApp = useNuxtApp()
 
-export const signOut = async () => {
-  const auth = getAuth()
-  return await auth.signOut()
+  if (!nuxtApp._firebaseAuth) {
+    const app = useFirebaseApp()
+    nuxtApp._firebaseAuth = getAuth(app)
+  }
+  return nuxtApp._firebaseAuth
 }

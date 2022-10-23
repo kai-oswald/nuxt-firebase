@@ -1,19 +1,11 @@
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { initializeApp } from 'firebase/app'
+import { onAuthStateChanged } from 'firebase/auth'
 import { useFirebaseUser } from '../composables/useFirebaseUser'
 import { useFirebaseToken } from '../composables/useFirebaseToken'
-import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
+import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
   // initialize firebase
-  const config = useRuntimeConfig()
-  const firebaseConfig = {
-    apiKey: config.public.firebase.apiKey,
-    authDomain: config.public.firebase.authDomain
-  }
-
-  initializeApp(firebaseConfig)
-  const auth = getAuth()
+  const auth = useFirebaseAuth()
 
   // Once Nuxt app is mounted
   nuxtApp.hooks.hook('app:mounted', async () => {

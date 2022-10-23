@@ -13,11 +13,14 @@
 </template>
 
 <script setup lang="ts">
+import { signOut } from 'firebase/auth'
 const user = useFirebaseUser()
 
 const logout = async () => {
-  await signOut()
+  const auth = useFirebaseAuth()
   // Trick to wait for the authChanged event to have been fired
+  await signOut(auth)
+
   watch(user, () => {
     if (!user.value) {
       navigateTo('/')
