@@ -11,9 +11,53 @@
 - Authentication support
 - TypeScript support
 
-## Usage
+## Quick Setup
 
-tbd
+1. Add `@oswld/nuxt-firebase` dependency to your project
+```
+# using yarn
+yarn add --dev @oswld/nuxt-firebase
+
+# using npm
+npm i --save-dev @oswld/nuxt-firebase
+```
+
+2. Add `@oswld/nuxt-firebase` to the `modules` section of `nuxt.config.ts`
+```
+{
+    modules: [
+        '@oswld/nuxt-firebase'
+    ],   
+}
+```
+
+3. Add your firebase config to the `firebase` section of `nuxt.config.ts`
+```
+{
+    firebase: {
+        config: firebaseConfig
+    }
+}
+```
+
+That's it! You can now use firebase in your Nuxt app ✨
+
+## Usage
+More detailed documentation tbd.
+
+### Vue Composables
+- `useFirebaseUser`
+- `useFirebaseApp`
+- `useFirebaseAuth`
+- `useFirebaseToken`
+- `useFirebaseFunctions`
+- `useFirestore`
+
+### Server services
+- `serverFirebaseAdmin`
+- `serverFirebaseAuth`
+- `serverFirebaseUser`
+
 
 ## Nuxt 2
 
