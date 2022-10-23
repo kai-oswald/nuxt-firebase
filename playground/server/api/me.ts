@@ -1,16 +1,11 @@
-import { serverFirebaseAuth } from '#firebase/server'
-
+import { serverFirebaseUser } from '#firebase/server'
 export default defineEventHandler(async (event) => {
-  const auth = serverFirebaseAuth(event)
-  const token = event.context._token
+  const user = await serverFirebaseUser(event)
 
-  if (!token) {
+  if (!user) {
     event.res.statusCode = 400
     return 'Must be signed in'
   }
 
-  const decodedToken = await auth.verifyIdToken(token)
-
-  const user = await auth.getUser(decodedToken?.uid)
   return user
 })

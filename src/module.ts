@@ -1,20 +1,20 @@
 import { fileURLToPath } from 'url'
 import { defu } from 'defu'
-import { defineNuxtModule, addPlugin, addServerHandler, extendViteConfig, createResolver, resolveModule, addTemplate } from '@nuxt/kit'
-import { CookieOptions, RedirectOptions } from './runtime/types'
+import { defineNuxtModule, addPlugin, addServerHandler, createResolver, resolveModule, addTemplate } from '@nuxt/kit'
+import type { FirebaseOptions } from 'firebase/app'
+import type { CookieOptions, RedirectOptions } from './runtime/types'
 
 export interface ModuleOptions {
-   /**
-   * Firebase Client API Key
-   * @default process.env.FIREBASE_API_KEY
-   * @example '123456789'
-   * @type string
-   * @docs https://firebase.google.com/docs/reference/js/app.firebaseoptions#firebaseoptionsapikey
+  /**
+   * Firebase client options that are passed to `initializeApp`
+   * @default {}
+   * @type object
+   * @docs https://firebase.google.com/docs/reference/js/v8/firebase#initializeapp
    */
-  apiKey: string
+   config: FirebaseOptions
 
   /**
-   * Firebase private key for server-side (admin only)
+   * Firebase private key for firebase-admin
    * @default process.env.FIREBASE_PRIVATE_KEY
    * @example '-----BEGIN PRIVATE KEY-----\n1234=\n-----END PRIVATE KEY-----\n'
    * @type string
@@ -23,27 +23,18 @@ export interface ModuleOptions {
   privateKey: string
 
   /**
-   * Firebase project id
+   * Firebase project id for firebase-admin
    * @default process.env.FIREBASE_PROJECT_ID
    * @example 'your-project'
    * @type string
-   * @docs https://firebase.google.com/docs/reference/js/app.firebaseoptions#firebaseoptionsprojectid
+   * @docs https://firebase.google.com/docs/admin/setup#set-up-project-and-service-account
    */
-    projectId: string
+  projectId: string
 
   /**
-   * The auth domain used for oauth
-   * @default process.env.FIREBASE_AUTH_DOMAIN
-   * @example 'https://your-domain.com'
-   * @type string
-   * @docs https://firebase.google.com/docs/reference/js/app.firebaseoptions#firebaseoptionsauthdomain
-   */
-    authDomain: string
-
-  /**
-   * The firebase client email (admin only)
+   * The firebase client email for firebase-admin
    * @default process.env.FIREBASE_CLIENT_EMAIL
-   * @example 'you@your-domain.com'
+   * @example 'firebase-adminsdk-1234@your-project.iam.gserviceaccount.com'
    * @type string
    * @docs https://firebase.google.com/docs/admin/setup#set-up-project-and-service-account
    */
@@ -79,10 +70,9 @@ export default defineNuxtModule<ModuleOptions>({
     }
   },
   defaults: {
-    apiKey: process.env.FIREBASE_API_KEY as string,
+    config: {},
     privateKey: process.env.FIREBASE_PRIVATE_KEY as string,
     projectId: process.env.FIREBASE_PROJECT_ID as string,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN as string,
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL as string,
     redirect: false,
     cookies: {
@@ -97,32 +87,25 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
     const resolveRuntimeModule = (path: string) => resolveModule(path, { paths: resolve('./runtime') })
 
+    // firebase admin available?
     if (!options.projectId) {
       // eslint-disable-next-line no-console
-      console.warn('Missing `FIREBASE_PROJECT_ID` in `.env`')
+      console.warn('Missing `FIREBASE_PROJECT_ID` in `.env`. `firebase-admin` not available.')
     }
-
-    if (!options.apiKey) {
-      // eslint-disable-next-line no-console
-      console.warn('Missing `FIREBASE_API_KEY` in `.env`')
-    }
-
     if (!options.privateKey) {
       // eslint-disable-next-line no-console
-      console.warn('Missing `FIREBASE_PRIVATE_KEY` in `.env`')
+      console.warn('Missing `FIREBASE_PRIVATE_KEY` in `.env`. `firebase-admin` not available.')
     }
-
     if (!options.clientEmail) {
       // eslint-disable-next-line no-console
-      console.warn('Missing `FIREBASE_CLIENT_EMAIL` in `.env`')
+      console.warn('Missing `FIREBASE_CLIENT_EMAIL` in `.env`. `firebase-admin` not available.')
     }
 
     // Public runtimeConfig
     nuxt.options.runtimeConfig.public.firebase = defu(nuxt.options.runtimeConfig.public.firebase, {
-      apiKey: options.apiKey,
+      config: options.config,
       redirect: options.redirect,
-      cookies: options.cookies,
-      authDomain: options.authDomain
+      cookies: options.cookies
     })
 
     // Private runtimeConfig
@@ -166,7 +149,9 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'types/firebase.d.ts',
       getContents: () => [
         'declare module \'#firebase/server\' {',
+        `  const serverFirebaseAdmin: typeof import('${resolve('./runtime/server/services')}').serverFirebaseAdmin`,
         `  const serverFirebaseAuth: typeof import('${resolve('./runtime/server/services')}').serverFirebaseAuth`,
+        `  const serverFirebaseUser: typeof import('${resolve('./runtime/server/services')}').serverFirebaseUser`,
         '}'
       ].join('\n')
     })
