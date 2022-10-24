@@ -1,5 +1,5 @@
 import { type FirebaseApp, initializeApp, getApps } from 'firebase/app'
-import { useNuxtApp } from '#imports'
+import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export const useFirebaseApp = (): FirebaseApp => {
   const nuxtApp = useNuxtApp()
