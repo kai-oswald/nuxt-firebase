@@ -1,4 +1,5 @@
 import { type Auth, getAuth } from 'firebase/auth'
+import { useFirebaseApp } from './useFirebaseApp'
 import { useNuxtApp } from '#imports'
 
 export const useFirebaseAuth = (): Auth => {
