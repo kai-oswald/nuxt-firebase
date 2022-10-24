@@ -40,6 +40,16 @@ npm i --save-dev @oswld/nuxt-firebase
 }
 ```
 
+4. Add config for `firebase-admin`.
+These must currently be present on process.env, so add them to your environment variables:
+```
+// .env
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n1234\n-----END PRIVATE KEY-----\n"
+FIREBASE_CLIENT_EMAIL="firebase-adminsdk-1234@your-firebase-project.iam.gserviceaccount.com"
+FIREBASE_PROJECT_ID="your-firebase-project"
+```
+
+
 That's it! You can now use firebase in your Nuxt app ✨
 
 ## Usage
