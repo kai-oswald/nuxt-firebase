@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth'
 import { useFirebaseUser } from '../composables/useFirebaseUser'
 import { useFirebaseToken } from '../composables/useFirebaseToken'
+import { useFirebaseAuth } from '../composables/useFirebaseAuth'
 import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
