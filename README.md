@@ -2,6 +2,8 @@
 
 > [Firebase](https://firebase.google.com/) module for [Nuxt](https://v3.nuxtjs.org)
 
+[Demo](https://nuxt3-firebase-demo.netlify.app/)
+
 ## Features
 
 - Nuxt 3 ready
