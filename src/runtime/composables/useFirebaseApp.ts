@@ -7,6 +7,8 @@ export const useFirebaseApp = (): FirebaseApp => {
   const { firebase: { config } } = useRuntimeConfig().public
 
   const apps = getApps()
+
+  // initialize app if not done yet.
   const app = apps.length ? apps[0] : initializeApp(config)
 
   // if firebase app has not been created yet.

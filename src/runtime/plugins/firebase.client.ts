@@ -27,11 +27,18 @@ export const initUser = (auth) => {
 
     firebaseUser.value = user
 
+    // The following are just workarounds, in case servers don't set cookies.
+
     // Some hosts (such as netlify) don't return the cookie from the setServerSession call in api functions.
     // As a workaround we set the cookie client-side if the token was not set.
-    if (!firebaseToken.value) {
+    if (event === 'SIGNED_IN' && !firebaseToken.value) {
       // @ts-ignore
       firebaseToken.value = token // ignore error because nuxt will serialize to json
+    }
+
+    // Same workaround for signout, clear the cookie.
+    if (event === 'SIGNED_OUT' && firebaseToken.value) {
+      firebaseToken.value = null
     }
   })
 }
