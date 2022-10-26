@@ -1,5 +1,8 @@
 <template>
   <div v-if="user">
+    <button @click="logout">
+      logout
+    </button>
     <div>
       Welcome {{ user.displayName ?? user.email }}!
     </div>
@@ -22,13 +25,20 @@ const user = useFirebaseUser()
 const userFromServer = ref(null)
 const status = ref(null)
 const item = ref(null)
+let unsubscribe
 
 onMounted(() => {
   const db = useFirestore()
-  const unsub = onSnapshot(doc(db, 'status', user.value.uid), (item) => {
+  unsubscribe = onSnapshot(doc(db, 'status', user.value.uid), (item) => {
     if (!item.exists) { return }
     status.value = item.data()
   })
+})
+
+onBeforeUnmount(() => {
+  // unsubscribe when we leave this page
+  if (!unsubscribe) { return }
+  unsubscribe()
 })
 
 async function addItem () {
@@ -43,5 +53,16 @@ async function addItem () {
 const fetchMeFromServerRoute = async () => {
   const { data } = await useFetch('/api/me', { headers: useRequestHeaders(['cookie']) })
   userFromServer.value = data.value
+}
+
+async function logout () {
+  unsubscribe()
+  const auth = useFirebaseAuth()
+  await auth.signOut()
+  watch(user, () => {
+    if (!user.value) {
+      navigateTo('/')
+    }
+  })
 }
 </script>

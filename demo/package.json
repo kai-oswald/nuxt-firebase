@@ -8,7 +8,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@oswld/nuxt-firebase": "0.2.4",
+    "@oswld/nuxt-firebase": "0.2.7",
     "nuxt": "3.0.0-rc.12"
   },
   "dependencies": {
