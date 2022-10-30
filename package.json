@@ -3,6 +3,7 @@
   "version": "0.2.7",
   "description": "Firebase module for Nuxt",
   "repository": "kai-oswald/nuxt-firebase",
+  "homepage": "https://kai-oswald.github.io/nuxt-firebase/",
   "license": "MIT",
   "type": "module",
   "exports": {
