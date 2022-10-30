@@ -2,6 +2,7 @@
 
 > [Firebase](https://firebase.google.com/) module for [Nuxt](https://v3.nuxtjs.org)
 
+[Docs](https://kai-oswald.github.io/nuxt-firebase/)
 [Demo](https://nuxt3-firebase-demo.netlify.app/)
 
 ## Features
@@ -53,9 +54,6 @@ FIREBASE_PROJECT_ID="your-firebase-project"
 
 
 That's it! You can now use firebase in your Nuxt app ✨
-
-## Usage
-More detailed documentation tbd.
 
 ### Vue Composables
 - `useFirebaseUser`
