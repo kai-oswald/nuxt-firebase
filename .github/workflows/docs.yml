@@ -17,6 +17,9 @@ jobs:
           node-version: 16
       - run: npm install
 
+      - name: Prepare
+        run: npm run dev:prepare
+
       - name: Build
         run: npm run docs:build
 
