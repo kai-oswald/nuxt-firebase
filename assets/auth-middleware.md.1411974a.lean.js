@@ -1,0 +1,1 @@
+import{_ as s,c as a,o as n,a as l}from"./app.25312196.js";const A=JSON.parse('{"title":"Auth middleware","description":"","frontmatter":{},"headers":[],"relativePath":"auth-middleware.md"}'),e={name:"auth-middleware.md"},o=l("",5),p=[o];function t(r,c,y,F,D,i){return n(),a("div",null,p)}const C=s(e,[["render",t]]);export{A as __pageData,C as default};
