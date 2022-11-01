@@ -1,6 +1,7 @@
 import type { Auth } from 'firebase/auth'
 import type { FirebaseApp } from 'firebase/app'
 import type { Firestore } from 'firebase/firestore/lite'
+import type { Functions } from 'firebase/functions'
 
 export interface CookieOptions {
     // (Optional) The cookie name prefix. Defaults to `fb` meaning the cookies will be `fb-access-token`.
@@ -23,6 +24,7 @@ declare module '#app' {
     interface NuxtApp {
       $firebaseApp: FirebaseApp;
       $firebaseAuth: Auth;
-      $firebaseFirestore: Firestore
+      $firebaseFirestore: Firestore;
+      $firebaseFunctions: Functions;
     }
   }

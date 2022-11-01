@@ -3,6 +3,7 @@ import { getFirestore } from 'firebase/firestore/lite'
 import { getFunctions } from 'firebase/functions'
 import { useFirebaseUser } from '../composables/useFirebaseUser'
 import { useFirebaseToken } from '../composables/useFirebaseToken'
+import { useFirebaseApp } from '../composables/useFirebaseApp'
 import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
