@@ -1,6 +1,6 @@
 {
   "name": "@oswld/nuxt-firebase",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Firebase module for Nuxt",
   "repository": "kai-oswald/nuxt-firebase",
   "homepage": "https://kai-oswald.github.io/nuxt-firebase/",
