@@ -7,7 +7,6 @@ import { useFirebaseApp } from '../composables/useFirebaseApp'
 import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  if (!process.client) { return }
   // initialize firebase
   const app = useFirebaseApp()
   const auth = getAuth(app)
