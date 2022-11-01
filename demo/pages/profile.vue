@@ -20,29 +20,19 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onSnapshot, setDoc, doc } from 'firebase/firestore'
+import { getDoc, setDoc, doc } from 'firebase/firestore/lite'
 const user = useFirebaseUser()
 const userFromServer = ref(null)
 const status = ref(null)
 const item = ref(null)
-let unsubscribe
+const db = useFirestore()
 
-onMounted(() => {
-  const db = useFirestore()
-  unsubscribe = onSnapshot(doc(db, 'status', user.value.uid), (item) => {
-    if (!item.exists) { return }
-    status.value = item.data()
-  })
-})
-
-onBeforeUnmount(() => {
-  // unsubscribe when we leave this page
-  if (!unsubscribe) { return }
-  unsubscribe()
+onMounted(async () => {
+  const item = await getDoc(doc(db, 'status', user.value.uid))
+  status.value = item.exists() ? item.data() : ''
 })
 
 async function addItem () {
-  const db = useFirestore()
   await setDoc(doc(db, 'status', user.value.uid), {
     text: item.value
   })
@@ -56,7 +46,6 @@ const fetchMeFromServerRoute = async () => {
 }
 
 async function logout () {
-  unsubscribe()
   const auth = useFirebaseAuth()
   await auth.signOut()
   watch(user, () => {

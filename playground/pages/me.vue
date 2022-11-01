@@ -23,19 +23,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onSnapshot, setDoc, doc } from 'firebase/firestore'
+import { getDoc, setDoc, doc } from 'firebase/firestore/lite'
 const user = useFirebaseUser()
 const userFromServer = ref(null)
 const dataFromServer = ref(null)
 const status = ref(null)
 const item = ref(null)
 
-onMounted(() => {
+onMounted(async () => {
   const db = useFirestore()
-  const unsub = onSnapshot(doc(db, 'status', user.value.uid), (item) => {
-    if (!item.exists) { return }
-    status.value = item.data()
-  })
+  const item = await getDoc(doc(db, 'status', user.value.uid))
+  status.value = item.exists() ? item.data() : ''
 })
 
 async function addItem () {

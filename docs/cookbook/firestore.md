@@ -1,15 +1,17 @@
+# Firestore
+Use `firestore/lite` in your app.
+
 ### Read documents
 
 ```vue
 <script setup lang="ts">
-import { onSnapshot, doc } from 'firebase/firestore'
+import { getDoc, doc } from 'firebase/firestore/lite'
 const status = ref(null)
 
-onMounted(() => {
+onMounted(async () => {
   const db = useFirestore()
-  onSnapshot(doc(db, 'status', user.value.uid), (item) => {
-    status.value = item.data()
-  })
+  const item = await getDoc(doc(db, 'status', user.value.uid))
+  status.value = item.data()
 })
 </script>
 ```
@@ -18,7 +20,7 @@ onMounted(() => {
 
 ```vue
 <script setup lang="ts">
-import { setDoc, doc } from 'firebase/firestore'
+import { setDoc, doc } from 'firebase/firestore/lite'
 const item = ref(null)
 
 async function addItem () {

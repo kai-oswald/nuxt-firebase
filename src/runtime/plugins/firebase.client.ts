@@ -1,12 +1,22 @@
-import { onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore/lite'
+import { getFunctions } from 'firebase/functions'
 import { useFirebaseUser } from '../composables/useFirebaseUser'
 import { useFirebaseToken } from '../composables/useFirebaseToken'
-import { useFirebaseAuth } from '../composables/useFirebaseAuth'
 import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
+  if (!process.client) { return }
   // initialize firebase
-  const auth = useFirebaseAuth()
+  const app = useFirebaseApp()
+  const auth = getAuth(app)
+  const firestore = getFirestore(app)
+  const functions = getFunctions(app)
+
+  nuxtApp.provide('firebaseFunctions', functions)
+  nuxtApp.provide('firebaseApp', app)
+  nuxtApp.provide('firebaseAuth', auth)
+  nuxtApp.provide('firebaseFirestore', firestore)
 
   // Once Nuxt app is mounted
   nuxtApp.hooks.hook('app:mounted', async () => {
