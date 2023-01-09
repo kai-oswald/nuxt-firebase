@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'url'
 import { defu } from 'defu'
-import { defineNuxtModule, addPlugin, addServerHandler, createResolver, resolveModule, addTemplate } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, addServerHandler, createResolver, resolveModule, addTemplate, extendViteConfig } from '@nuxt/kit'
 import type { FirebaseOptions } from 'firebase/app'
 import type { CookieOptions, RedirectOptions } from './runtime/types'
 
@@ -66,7 +66,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: '@oswld/nuxt-firebase',
     configKey: 'firebase',
     compatibility: {
-      nuxt: '^3.0.0-rc.12'
+      nuxt: '^3.0.0'
     }
   },
   defaults: {
@@ -118,6 +118,16 @@ export default defineNuxtModule<ModuleOptions>({
     // Transpile runtime
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
+
+    // fixes https://github.com/kai-oswald/nuxt-firebase/issues/1
+    extendViteConfig((config) => {
+      config.optimizeDeps = config.optimizeDeps || {}
+      config.optimizeDeps.include = config.optimizeDeps.include || []
+      config.optimizeDeps.include.push('firebase/app')
+      config.optimizeDeps.include.push('firebase/auth')
+      config.optimizeDeps.include.push('firebase/firestore/lite')
+      config.optimizeDeps.include.push('firebase/functions')
+    })
 
     // Add firebase server plugin to load the user on server-side
     addPlugin(resolve(runtimeDir, 'plugins', 'firebase.server'))

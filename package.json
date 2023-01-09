@@ -1,6 +1,6 @@
 {
   "name": "@oswld/nuxt-firebase",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "Firebase module for Nuxt",
   "repository": "kai-oswald/nuxt-firebase",
   "homepage": "https://kai-oswald.github.io/nuxt-firebase/",
@@ -27,17 +27,17 @@
     "docs:serve": "vitepress serve docs"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.12",
+    "@nuxt/kit": "^3.0.0",
     "defu": "^6.1.0",
     "firebase": "^9.12.1",
     "firebase-admin": "^11.2.0"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.2.0",
-    "@nuxt/schema": "^3.0.0-rc.12",
+    "@nuxt/schema": "^3.0.0",
     "@nuxtjs/eslint-config-typescript": "^11.0.0",
     "eslint": "^8.25.0",
-    "nuxt": "^3.0.0-rc.12",
+    "nuxt": "^3.0.0",
     "vitepress": "^1.0.0-alpha.26"
   }
 }
