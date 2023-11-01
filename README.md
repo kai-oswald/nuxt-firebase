@@ -1,3 +1,6 @@
+> [!NOTE]
+> This lib was created when [Vuefire](https://github.com/vuejs/vuefire) wasn't Nuxt 3 ready yet, but it is now in a good state. I recommend using [Vuefire](https://github.com/vuejs/vuefire) instead of this one
+
 # nuxt-firebase module
 
 > [Firebase](https://firebase.google.com/) module for [Nuxt](https://v3.nuxtjs.org)
